@@ -1,11 +1,11 @@
+const express = require('express');
+const mongoose = require('mongoose');
 const sauce = require('./models/Sauce');
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
-const express = require('express');
-const mongoose = require('mongoose');
-const app = express();
 
-app.use(express.json());
+const path = require('path');
+const app = express();
 
 mongoose.connect('mongodb+srv://Karl:pv8NbLcF3WTL2xb@cluster0.ii8ob.mongodb.net/test?retryWrites=true&w=majority',
     { useNewUrlParser: true,
@@ -20,9 +20,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+
 //app.use(bodyParser.json());
 
-app.use('/api/sauces', sauceRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 
