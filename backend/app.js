@@ -1,6 +1,17 @@
+const sauce = require('./models/Sauce');
+const sauceRoutes = require('./routes/sauce');
+const userRoutes = require('./routes/user');
 const express = require('express');
-
+const mongoose = require('mongoose');
 const app = express();
+
+app.use(express.json());
+
+mongoose.connect('mongodb+srv://Karl:pv8NbLcF3WTL2xb@cluster0.ii8ob.mongodb.net/test?retryWrites=true&w=majority',
+    { useNewUrlParser: true,
+        useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie '))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,37 +20,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/sauces', (req, res, next) => {
-  const sauces = [
-    {
-      _id: 'oeihfzeoi',
-      title: 'Mon premier objet',
-      description: 'Les infos de mon premier objet',
-      imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
-      price: 4900,
-      userId: 'qsomihvqios',
-    },
-    {
-      userId: ' identifiant_MongoDB_unique_de_l_utilisateur_qui_a_créé_la_sauce',
-      name: 'Nom de la sauce',
-      manufacturer: 'fabricant de la sauce',
-      description: 'description de la sauce',
-      mainPepper: 'le principal ingrédient épicé de la sauce',
-      imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
-      heat : 'nombre entre 1 et 10 décrivant la sauce',
-      likes : 'nombre d utilisateurs qui aiment',
-      dislikes : 'nombre d utilisateurs qui n aiment pas',
-      userLiked: 'string <userId> tableau des identifiants qui ont aimé',
-      userDisliked: 'string <userId> tableau des identifiants qui n ont pas aimé',
-      
-    },
-  ];
-  res.status(200).json(sauces);
-  next();
-});
+//app.use(bodyParser.json());
 
-app.get('/', function(req, res, next) {
-  res.send("Hello world");
-});
+app.use('/api/sauces', sauceRoutes);
+app.use('/api/sauces', sauceRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
