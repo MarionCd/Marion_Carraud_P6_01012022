@@ -1,24 +1,5 @@
-/***Création d'un serveur basique****/
-
-// const http = require('http'); // import du package HTTP natif
-
-// const server = http.createServer((req, res) => {
-//     res.end('Voilà la réponse du serveur !');
-// });
-
-// server.listen(process.env.PORT || 3000);
-
-/******Exécution Express *******/
-
-// const http = require('http');
-// const app = require('./app');
-
-// app.set('port', process.env.PORT || 3000);
-// const server = http.createServer(app);
-
-// server.listen(process.env.PORT || 3000);
-
-/********Amélioration du fichier**********/
+const dotenv = require("dotenv");
+dotenv.config();
 
 const http = require('http');
 const app = require('./app');
